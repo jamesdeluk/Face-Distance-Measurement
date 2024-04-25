@@ -1,8 +1,10 @@
 import cv2
 import cvzone
 from cvzone.FaceMeshModule import FaceMeshDetector
+import winsound
+import time
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 detector = FaceMeshDetector(maxFaces=1)
 
 while True:
@@ -26,13 +28,17 @@ while True:
         # print(f)
 
         # Finding distance
-        f = 840
+        f = 700
         d = (W * f) / w
         print(d)
 
-        cvzone.putTextRect(img, f'Depth: {int(d)}cm',
-                           (face[10][0] - 100, face[10][1] - 50),
-                           scale=2)
+        if d < 50:
+            winsound.Beep(6000, 100)  # Beep at 440 Hz for 1000 milliseconds
+            time.sleep(0.1)
 
-    cv2.imshow("Image", img)
-    cv2.waitKey(1)
+        # cvzone.putTextRect(img, f'Depth: {int(d)}cm',
+        #                    (face[10][0] - 100, face[10][1] - 50),
+        #                    scale=2)
+
+    # cv2.imshow("Image", img)
+    # cv2.waitKey(1)
